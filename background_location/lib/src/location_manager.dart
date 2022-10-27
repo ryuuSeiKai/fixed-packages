@@ -26,13 +26,6 @@ class LocationManager {
   /// Get the singleton [LocationManager] instance
   factory LocationManager() => _instance;
   static const String _isolateName = "LocatorIsolate";
-  LocatoionManager() {
-    IsolateNameServer.registerPortWithName(_port.sendPort, _isolateName);
-    _port.listen((dynamic data) {
-      // do something with data
-    });
-    initPlatformState();
-  }
 
   Future<void> initPlatformState() async {
     await BackgroundLocator.initialize();
@@ -60,6 +53,8 @@ class LocationManager {
     // Register the service to the port name
     IsolateNameServer.registerPortWithName(
         _port.sendPort, LocationServiceRepository.isolateName);
+
+    initPlatformState();
   }
 
   /// Get the status of the location manager.
